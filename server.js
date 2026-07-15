@@ -8,6 +8,7 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require('express-session')
 const { MongoStore } = require('connect-mongo')
+const isSignedIn = require('./middleware/is-signed-in')
 
 const authCtrl = require('./controllers/auth')
 const listingsCtrl = require('./controllers/listings')
@@ -37,6 +38,7 @@ app.use(session({
     }),
 }))
 
+
 app.get('/', (req, res) => {
     res.render('home.ejs', {
         user: req.session.user,
@@ -51,7 +53,8 @@ app.post('/auth/sign-in', authCtrl.signIn)
 app.delete('/auth/sign-out', authCtrl.signOut)
 
 // LISTINGS ROUTERS
-app.get('/listings/new', listingsCtrl.showNewForm)
+app.get('/listings/new', isSignedIn, listingsCtrl.showNewForm)
+app.post('/listings', listingsCtrl.create)
 
 
 app.get('/dashboard', async (req, res) => {
