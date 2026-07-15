@@ -16,8 +16,51 @@
 
     <% if (foundListing.owner._id.equals(user._id)) { %>
         <p>You own this!</p>
+        <a href="/listings/<%= foundListing._id %>/edit">Edit this Listing</a>
+        <form action="/listings/<%= foundListing._id %>?_method=DELETE" method="POST">
+            <button type="submit">Delete this Listing</button>
+        </form>
     <% } else { %>
         <p>You don't own this, <%= foundListing.owner.username %> does!</p>
     <% } %>
+    <h2>Favorites</h2>
+    <p>Favorited by <%= foundListing.favoritedByUsers.length %> people.</p>
+    
+    <% if (userHasFavorited) { %>
+    <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="POST">
+        <button type="submit">❌</button> Unfavorite
+    </form>
+    <% } else { %>
+    <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>" method="POST">
+        <button type="submit">♥️</button>
+    </form>
+    <% } %>
+
+    <section>
+  <h2>Questions about this property?</h2>
+
+  <form action="/listings/<%= foundListing._id %>/questions" method="POST">
+
+    Ask a question:
+    <textarea name="text" rows="4"required></textarea>
+
+    <button type="submit">Ask Question</button>
+  </form>
+</section>
+<h3>Questions from users</h3>
+
+<% if (foundListing.questions.length === 0) { %>
+  <p>No questions have been asked yet.</p>
+<% } else { %>
+  <% foundListing.questions.forEach((question) => { %>
+    <article>
+      <p><%= question.text %></p>
+
+      <p>
+        Asked by <%= question.author.username %>
+      </p>
+    </article>
+  <% }) %>
+<% } %>
 </body>
 </html>

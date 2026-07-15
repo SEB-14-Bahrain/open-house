@@ -1,5 +1,23 @@
 const mongoose = require('mongoose')
 
+const questionSchema = new mongoose.Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+)
+
 const listingSchema = new mongoose.Schema({
     price: {
         type: Number,
@@ -28,6 +46,11 @@ const listingSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    favoritedByUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    questions: [questionSchema]
 }, { timestamps: true } )
 
 const Listing = mongoose.model('Listing', listingSchema)
