@@ -6,12 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>A listing in <%= foundListing.city %></h1>
     <img src="<%= foundListing.image %>" width="200px">
-    <h1><%= foundListing.streetAddress %></h1>
+
+    <h2>Details</h2>
+    <p>House Size: <%= foundListing.size %> sq ft</p>
+    <p>Price: $<%= foundListing.price %></p>
+    <p>Street address: <%= foundListing.streetAddress %></p>
 
     <% if (foundListing.owner._id.equals(user._id)) { %>
-        You own this
+        <p>You own this!</p>
+    <% } else { %>
+        <p>You don't own this, <%= foundListing.owner.username %> does!</p>
     <% } %>
-    <h4>Owned by: <%= foundListing.owner.username %></h4>
 </body>
 </html>

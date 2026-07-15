@@ -67,5 +67,5 @@ app.get('/dashboard', isSignedIn, async (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`);
+  console.log(`The express app is ready on port ${port}!`)
 })
