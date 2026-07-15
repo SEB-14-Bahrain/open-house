@@ -58,6 +58,7 @@ app.delete('/auth/sign-out', authCtrl.signOut)
 // LISTINGS ROUTERS
 app.get('/listings/new', isSignedIn, listingsCtrl.showNewForm)
 app.post('/listings', listingsCtrl.create)
+app.get('/listings', listingsCtrl.index)
 
 
 app.get('/dashboard', isSignedIn, async (req, res) => {

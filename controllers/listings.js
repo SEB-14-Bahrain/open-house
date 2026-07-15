@@ -20,10 +20,17 @@ const create = async (req, res) => {
 
     let createdListing = await Listing.create(listingData)
     
-    res.send(createdListing)  
+    res.redirect('/listings')
+}
+
+const index = async (req, res) => {
+    const allListings = await Listing.find()
+    console.log(allListings)
+    res.render('listings/index.ejs', {allListings})
 }
 
 module.exports = {
     showNewForm,
     create,
+    index,
 }
