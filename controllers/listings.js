@@ -29,8 +29,17 @@ const index = async (req, res) => {
     res.render('listings/index.ejs', {allListings})
 }
 
+const show = async (req, res) => {
+    const foundListing = await Listing.findById(req.params.listingId).populate('owner')
+    console.log(req.session.user)
+    res.render('listings/show.ejs', {
+        foundListing
+    })
+}
+
 module.exports = {
     showNewForm,
     create,
     index,
+    show,
 }

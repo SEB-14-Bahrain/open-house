@@ -59,6 +59,7 @@ app.delete('/auth/sign-out', authCtrl.signOut)
 app.get('/listings/new', isSignedIn, listingsCtrl.showNewForm)
 app.post('/listings', listingsCtrl.create)
 app.get('/listings', listingsCtrl.index)
+app.get('/listings/:listingId', isSignedIn, listingsCtrl.show)
 
 
 app.get('/dashboard', isSignedIn, async (req, res) => {

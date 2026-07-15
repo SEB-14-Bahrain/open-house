@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="<%= foundListing.image %>" width="200px">
+    <h1><%= foundListing.streetAddress %></h1>
+
+    <% if (foundListing.owner._id.equals(user._id)) { %>
+        You own this
+    <% } %>
+    <h4>Owned by: <%= foundListing.owner.username %></h4>
+</body>
+</html>
