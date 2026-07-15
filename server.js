@@ -8,7 +8,9 @@ const methodOverride = require("method-override");
 const morgan = require("morgan");
 const session = require('express-session')
 const { MongoStore } = require('connect-mongo')
+
 const isSignedIn = require('./middleware/is-signed-in')
+const passUserToView = require('./middleware/pass-user-to-view')
 
 const authCtrl = require('./controllers/auth')
 const listingsCtrl = require('./controllers/listings')
@@ -37,6 +39,7 @@ app.use(session({
         mongoUrl: process.env.MONGODB_URI
     }),
 }))
+app.use(passUserToView)
 
 
 app.get('/', (req, res) => {
@@ -57,13 +60,8 @@ app.get('/listings/new', isSignedIn, listingsCtrl.showNewForm)
 app.post('/listings', listingsCtrl.create)
 
 
-app.get('/dashboard', async (req, res) => {
-    if (!req.session.user){
-        return res.redirect('/auth/sign-in')
-    }
-    res.render('dashboard.ejs', {
-        user: req.session.user
-    })
+app.get('/dashboard', isSignedIn, async (req, res) => {
+    res.render('dashboard.ejs')
 })
 
 app.listen(port, () => {
