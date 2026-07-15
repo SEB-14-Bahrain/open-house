@@ -7,5 +7,15 @@
 </head>
 <body>
     <h1>View all the listings</h1>
+
+    <ul>
+        <% allListings.forEach((item) => { %>
+            <li>
+                <img src="<%= item.image %>" width="200px">
+                A listing in <%= item.city %> owned by: <%= item.owner.username %>
+            </li>
+        <% }) %>    
+    </ul>
+
 </body>
 </html>

@@ -24,7 +24,7 @@ const create = async (req, res) => {
 }
 
 const index = async (req, res) => {
-    const allListings = await Listing.find()
+    const allListings = await Listing.find().populate('owner')
     console.log(allListings)
     res.render('listings/index.ejs', {allListings})
 }
