@@ -31,9 +31,14 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
     const foundListing = await Listing.findById(req.params.listingId).populate('owner').populate('questions.author')
+
+    const userHasFavorited = foundListing.favoritedByUsers.some((user) => {
+        return user.equals(req.session.user._id)
+    })
   
     res.render('listings/show.ejs', {
-        foundListing
+        foundListing,
+        userHasFavorited
     })
 }
 
@@ -63,6 +68,22 @@ const update = async (req, res) => {
     res.redirect(`/listings/${req.params.listingId}`)
 }
 
+const favorite = async (req, res) => {
+    await Listing.findByIdAndUpdate(req.params.listingId, {
+        $push: { favoritedByUsers: req.params.userId }
+    })
+
+    res.redirect(`/listings/${req.params.listingId}`)
+}
+
+const unfavorite = async (req, res) => {
+    await Listing.findByIdAndUpdate(req.params.listingId, {
+        $pull: { favoritedByUsers: req.params.userId }
+    })
+
+    res.redirect(`/listings/${req.params.listingId}`)
+}
+
 module.exports = {
     showNewForm,
     create,
@@ -71,4 +92,6 @@ module.exports = {
     deleteListing,
     edit,
     update,
+    favorite,
+    unfavorite,
 }

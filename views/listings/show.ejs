@@ -26,6 +26,30 @@
         <p>You don't own this, <%= foundListing.owner.username %> does!</p>
 
     <% } %>
+
+    <section>
+        <h2>Favorites</h2>
+
+       <% if ( foundListing.favoritedByUsers.length  === 0) { %>
+            <p>No one favorited this listing yet.</p>
+        <% } else if ( foundListing.favoritedByUsers.length  === 1) { %>
+            <p>Favorited by <%= foundListing.favoritedByUsers.length %> person.</p>
+        <% } else { %>
+            <p>Favorited by <%= foundListing.favoritedByUsers.length %> people.</p>
+        <% } %>
+
+          <% if (userHasFavorited) { %>
+            <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="POST">
+                <button type="submit">❌</button>
+            </form>
+          <% } else { %>
+              <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>" method="POST">
+                  <button type="submit">♥️</button>
+              </form>
+          <% } %>
+
+    </section>
+
     <section>
         <h2>Questions about this property?</h2>
         <form action="/listings/<%= foundListing._id %>/questions" method="POST">

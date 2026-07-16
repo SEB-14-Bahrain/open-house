@@ -64,6 +64,8 @@ app.get('/listings/:listingId', isSignedIn, listingsCtrl.show)
 app.delete('/listings/:listingId', isSignedIn, listingsCtrl.deleteListing)
 app.get('/listings/:listingId/edit', isSignedIn, listingsCtrl.edit )
 app.put('/listings/:listingId', isSignedIn, listingsCtrl.update)
+app.post('/listings/:listingId/favorited-by/:userId', isSignedIn, listingsCtrl.favorite)
+app.delete('/listings/:listingId/favorited-by/:userId', isSignedIn, listingsCtrl.unfavorite)
 
 //  QUESTIONS ROUTERS
 app.post('/listings/:listingId/questions', questionsCtrl.create)
