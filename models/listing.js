@@ -40,6 +40,7 @@ const listingSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    questions: [questionSchema],
 }, { timestamps: true } )
 
 const Listing = mongoose.model('Listing', listingSchema)

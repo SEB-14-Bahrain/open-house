@@ -26,5 +26,12 @@
         <p>You don't own this, <%= foundListing.owner.username %> does!</p>
 
     <% } %>
+    <section>
+        <h2>Questions about this property?</h2>
+        <form action="/listings/<%= foundListing._id %>/questions" method="POST">
+            <textarea name="text" rows="4" required></textarea>
+            <button type="submit">Ask Question</button>
+        </form>
+    </section>
 </body>
 </html>
