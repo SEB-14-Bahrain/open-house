@@ -61,6 +61,8 @@ app.post('/listings', listingsCtrl.create)
 app.get('/listings', listingsCtrl.index)
 app.get('/listings/:listingId', isSignedIn, listingsCtrl.show)
 app.delete('/listings/:listingId', isSignedIn, listingsCtrl.deleteListing)
+app.get('/listings/:listingId/edit', isSignedIn, listingsCtrl.edit )
+app.put('/listings/:listingId', isSignedIn, listingsCtrl.update)
 
 
 app.get('/dashboard', isSignedIn, async (req, res) => {

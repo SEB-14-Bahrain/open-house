@@ -38,17 +38,29 @@ const show = async (req, res) => {
 }
 
 const deleteListing = async (req, res) => {
+    await Listing.findByIdAndDelete(req.params.listingId)
+    res.redirect('/listings')
+}
+
+const edit = async (req, res) => {
     const foundListing = await Listing.findById(req.params.listingId)
 
-    if (foundListing.owner.equals(req.session.user._id)) {
-        await Listing.findByIdAndDelete(req.params.listingId)
-        res.redirect('/listings')
-    } else {
-        res.render('error.ejs', {
-            msg: "You don't have permission to do that."
-        })
-    }
+    res.render('listings/edit.ejs', {
+        foundListing
+    })
+}
 
+const update = async (req, res) => {
+    let listingData = {}
+
+    listingData.price = req.body.price
+    listingData.streetAddress = req.body.streetAddress
+    listingData.city = req.body.city
+    listingData.size = req.body.size
+    listingData.image = req.body.image
+
+    await Listing.findByIdAndUpdate(req.params.listingId, listingData)
+    res.redirect(`/listings/${req.params.listingId}`)
 }
 
 module.exports = {
@@ -57,4 +69,6 @@ module.exports = {
     index,
     show,
     deleteListing,
+    edit,
+    update,
 }
