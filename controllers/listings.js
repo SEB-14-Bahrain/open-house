@@ -37,9 +37,24 @@ const show = async (req, res) => {
     })
 }
 
+const deleteListing = async (req, res) => {
+    const foundListing = await Listing.findById(req.params.listingId)
+
+    if (foundListing.owner.equals(req.session.user._id)) {
+        await Listing.findByIdAndDelete(req.params.listingId)
+        res.redirect('/listings')
+    } else {
+        res.render('error.ejs', {
+            msg: "You don't have permission to do that."
+        })
+    }
+
+}
+
 module.exports = {
     showNewForm,
     create,
     index,
     show,
+    deleteListing,
 }

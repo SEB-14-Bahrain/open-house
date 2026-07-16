@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`)
-});
+})
 
 // Middleware to parse URL-encoded data from forms
 app.use(express.urlencoded({ extended: false }))
@@ -60,10 +60,18 @@ app.get('/listings/new', isSignedIn, listingsCtrl.showNewForm)
 app.post('/listings', listingsCtrl.create)
 app.get('/listings', listingsCtrl.index)
 app.get('/listings/:listingId', isSignedIn, listingsCtrl.show)
+app.delete('/listings/:listingId', isSignedIn, listingsCtrl.deleteListing)
 
 
 app.get('/dashboard', isSignedIn, async (req, res) => {
     res.render('dashboard.ejs')
+})
+
+
+app.get('/*splat', (req, res) => {
+    res.render('error.ejs', {
+        msg: 404
+    })
 })
 
 app.listen(port, () => {
