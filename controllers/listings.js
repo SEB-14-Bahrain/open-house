@@ -25,13 +25,13 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
     const allListings = await Listing.find().populate('owner')
-    console.log(allListings)
+   
     res.render('listings/index.ejs', {allListings})
 }
 
 const show = async (req, res) => {
-    const foundListing = await Listing.findById(req.params.listingId).populate('owner')
-    console.log(req.session.user)
+    const foundListing = await Listing.findById(req.params.listingId).populate('owner').populate('questions.author')
+  
     res.render('listings/show.ejs', {
         foundListing
     })

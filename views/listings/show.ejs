@@ -32,6 +32,12 @@
             <textarea name="text" rows="4" required></textarea>
             <button type="submit">Ask Question</button>
         </form>
+
+        <h3>Questions from users</h3>
+        <% foundListing.questions.forEach((item) => { %>
+            <p><%= item.text %></p>
+            <p>Asked by: <%= item.author.username %></p>
+        <% }) %>
     </section>
 </body>
 </html>
